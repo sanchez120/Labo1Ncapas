@@ -77,9 +77,19 @@ namespace DLA
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateAsync<TEntity>(TEntity toUpdate) where TEntity : class
+        public async Task<bool> UpdateAsync<TEntity>(TEntity toUpdate) where TEntity : class
         {
-            throw new NotImplementedException();
+            bool Result = false;
+            try
+            {
+                _context.Entry<TEntity>(toUpdate).State = EntityState.Modified;
+                Result = await _context.SaveChangesAsync() > 0;
+            }
+            catch (DbException)
+            {
+                throw;
+            }
+            return Result;
         }
     }
 }
