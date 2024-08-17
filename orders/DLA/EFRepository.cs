@@ -61,7 +61,10 @@ namespace DLA
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+           if (_context != null)
+            {
+                _context.Dispose();
+            }
         }
 
         public Task<List<TEntity>> FilterAsync<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
