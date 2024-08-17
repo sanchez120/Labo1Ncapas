@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DLA.Datos;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -42,9 +43,20 @@ namespace DLA
             return result;
         }
 
-        public Task<bool> DeleteAsync<TEntity>(TEntity toDelete) where TEntity : class
+        public async Task<bool> DeleteAsync<TEntity>(TEntity toDelete) where TEntity : class
         {
-            throw new NotImplementedException();
+            bool result = false;
+            try
+            {
+                _context.Entry<TEntity>(toDelete).State =EntityState.Deleted;
+                 result = await _context.SaveChangesAsync() >0;
+            }
+
+            catch (DbException)
+            {
+                throw;
+            }
+            return result;
         }
 
         public void Dispose()
