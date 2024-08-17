@@ -67,9 +67,18 @@ namespace DLA
             }
         }
 
-        public Task<List<TEntity>> FilterAsync<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
+        public async Task<List<TEntity>> FilterAsync<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
         {
-            throw new NotImplementedException();
+            List<TEntity> result = default(List<TEntity>);
+            try
+            {
+                result = await _context.Set<TEntity>().Where(criteria).ToListAsync();
+            }
+            catch (DbException)
+            {
+                throw;
+            }
+            return result;
         }
 
         public async Task<TEntity> RetreiveAsync<TEntity>(Expression<Func<TEntity, bool>> criteria) where TEntity : class
