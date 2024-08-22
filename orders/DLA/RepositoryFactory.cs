@@ -9,7 +9,9 @@ namespace DLA
 {
     public class RepositoryFactory
     {
-        public static IRepository CreateRepositiry() {
+        public static IRepository CreateRepositiry()
+        {
             return new EFRepository(new Datos.ApplicationDbContext());
+        }
     }
 }
