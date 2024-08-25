@@ -6,8 +6,8 @@ using System.Linq.Expressions;
 
 //CreateAsync().GetAwaiter().GetResult();
 //RetreiveAsync().GetAwaiter().GetResult();
-UpdateAsync().GetAwaiter().GetResult();
-
+//UpdateAsync().GetAwaiter().GetResult();
+FilterAsync().GetAwaiter().GetResult();
 
 Console.ReadKey();
 // crear un objeto 
@@ -100,3 +100,17 @@ static async Task UpdateAsync()
 }
 
 
+static async Task FilterAsync()
+{
+    using (var repository = RepositoryFactory.CreateRepositiry())
+    {
+        Expression<Func<Customer, bool>> criterial = c => c.Country == "USA";
+
+        var customers = await repository.FilterAsync(criterial);
+
+        foreach (var customer in customers)
+        {
+            Console.WriteLine($"customer: {customer.FirstName} {customer.LastName}\t from {customer.City}");
+        }
+    }
+}
