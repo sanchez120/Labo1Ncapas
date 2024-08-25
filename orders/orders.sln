@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLA", "DLA\DLA.csproj", "{93F4EE0E-13B7-4335-A30D-F2FE8AE60A21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLA", "DLA\DLA.csproj", "{93F4EE0E-13B7-4335-A30D-F2FE8AE60A21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{91F35B11-632B-4378-900A-C3BE8A48CE77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{91F35B11-632B-4378-900A-C3BE8A48CE77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTestDAL", "ConsoleAppTestDAL\ConsoleAppTestDAL.csproj", "{B2F5EE52-A0DF-4171-8DFB-BC5058B776B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{91F35B11-632B-4378-900A-C3BE8A48CE77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91F35B11-632B-4378-900A-C3BE8A48CE77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91F35B11-632B-4378-900A-C3BE8A48CE77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2F5EE52-A0DF-4171-8DFB-BC5058B776B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F5EE52-A0DF-4171-8DFB-BC5058B776B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F5EE52-A0DF-4171-8DFB-BC5058B776B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F5EE52-A0DF-4171-8DFB-BC5058B776B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
