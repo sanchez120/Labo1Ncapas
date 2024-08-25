@@ -7,7 +7,8 @@ using System.Linq.Expressions;
 //CreateAsync().GetAwaiter().GetResult();
 //RetreiveAsync().GetAwaiter().GetResult();
 //UpdateAsync().GetAwaiter().GetResult();
-FilterAsync().GetAwaiter().GetResult();
+//FilterAsync().GetAwaiter().GetResult();
+DeleteAsync().GetAwaiter().GetResult();
 
 Console.ReadKey();
 // crear un objeto 
@@ -114,3 +115,21 @@ static async Task FilterAsync()
         }
     }
 }
+
+
+static async Task DeleteAsync()
+{
+    using (var repository = RepositoryFactory.CreateRepositiry())
+    {
+        {
+            Expression<Func<Customer, bool>> criteria = Customer => Customer.Id == 92;
+            var customerToDelete = await repository.RetreiveAsync(criteria);
+            if (customerToDelete != null)
+            {
+                bool deleted = await repository.DeleteAsync(customerToDelete);
+                Console.WriteLine(deleted ? "customer deleted successfully." : "failed to delete custoemr. ");
+            }
+        }
+    }
+}
+
