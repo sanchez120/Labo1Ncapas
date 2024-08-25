@@ -5,8 +5,11 @@ using System;
 using System.Linq.Expressions;
 
 //CreateAsync().GetAwaiter().GetResult();
-RetreiveAsync().GetAwaiter().GetResult();
+//RetreiveAsync().GetAwaiter().GetResult();
+UpdateAsync().GetAwaiter().GetResult();
 
+
+Console.ReadKey();
 // crear un objeto 
 static async Task CreateAsync()
 {
@@ -59,6 +62,41 @@ static async Task RetreiveAsync()
 }
 
 
+static async Task UpdateAsync()
+{
+    // supuesto: existe el objeto a modificar
+    
+    using(var repository = RepositoryFactory.CreateRepositiry())
+    {
+        var customerToUpdate = await repository.RetreiveAsync<Customer>(c => c.Id == 78);
 
+        if (customerToUpdate != null)
+        {
+            customerToUpdate.FirstName = "Liu";
+            customerToUpdate.LastName = "Wong";
+            customerToUpdate.City = "Toronto";
+            customerToUpdate.Country = "Canada";
+            customerToUpdate.Phone = "+14337 6353039";
+        }
+
+        try
+        {
+            bool update = await repository.UpdateAsync(customerToUpdate);
+            if (update)
+            {
+                Console.WriteLine("customer updated suceessfully");
+            }
+            else
+            {
+                Console.WriteLine("customer update faild.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+    
+}
 
 
