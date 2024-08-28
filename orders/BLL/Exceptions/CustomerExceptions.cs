@@ -30,5 +30,10 @@ namespace BLL.Exceptions
         {
             throw new CustomerExceptions($"ID de cliente no válido: {id}");
         }
+
+        internal static void ThrowInvalidCustomerIdException(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

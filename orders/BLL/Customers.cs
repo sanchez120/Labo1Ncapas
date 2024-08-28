@@ -72,7 +72,91 @@ namespace BLL
             // Puedes ajustar esta expresión regular según las reglas de formato de teléfono que necesites
             return System.Text.RegularExpressions.Regex.IsMatch(phone, @"^\d{10}$");
         }
+        public async Task<Customer> RetrieveByAsync(int id)
+        {
+            Customer result = null;
+
+            using (var repository = RepositoryFactory.CreateRepositiry())
+            {
+                Customer customer = await repository.RetreiveAsync<Customer>(c => c.Id == id);
+
+                // Check if customer was found
+                if (customer == null)
+                {
+                    // Throw a CustomerNotFoundException (assuming you have this class)
+                    CustomerExceptions.ThrowInvalidCustomerIdException(id);
+                }
+
+                return customer;
+            }
+
+
+        }
+
+        public async Task<List<Customer>> RetrieveAllAsync()
+        {
+            List<Customer> result = null;
+
+            using (var r = RepositoryFactory.CreateRepositiry())
+            {
+                Expression<Func<Customer, bool>> allCustomersCriteria = x => true;
+                result = await r.FilterAsync<Customer>(allCustomersCriteria);
+            }
+            return result;
+        }
+        public async Task<bool> UpdateAsync(Customer customer)
+        {
+            bool Result = false;
+            using (var repository = RepositoryFactory.CreateRepositiry())
+            {
+                // Validar que el nombre del cliente no exista
+                Customer customerSearch =
+                await repository.RetreiveAsync<Customer>
+                (c => c.FirstName == customer.FirstName
+                && c.Id != customer.Id);
+                if (customerSearch == null)
+                {
+                    // No existe
+                    Result = await repository.UpdateAsync(customer);
+                }
+                else
+                {
+                    // Podemos implementar alguna lógica para
+                    // indicar que no se pudo modificar
+                    CustomerExceptions.ThrowCustomerAlreadyExistsException(customerSearch.FirstName, customerSearch.LastName);
+                }
+            }
+            return Result;
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            bool Result = false;
+            // Buscar un cliente para ver si tiene Orders (Ordenes de Compra)
+            var customer = await RetrieveByAsync(id);
+            if (customer != null)
+            {
+                // Eliminar el cliente
+                using (var repository = RepositoryFactory.CreateRepositiry())
+                {
+                    Result = await repository.DeleteAsync(customer);
+                }
+            }
+            else
+            {
+                // Podemos implementar alguna lógica
+                // para indicar que el producto no existe
+                CustomerExceptions.ThrowInvalidCustomerIdException(id);
+            }
+            return Result;
+        }
+
     }
+
 }
 
-       
+
+
+
+
+
